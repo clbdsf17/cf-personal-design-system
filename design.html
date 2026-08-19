@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CF Personal — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — mirrored 1:1 from docs/design.md
+   ============================================================ */
+:root {
+  --color-background: #F4F3F1;
+  --color-surface: #FFFFFF;
+  --color-surface-sunken: #EAE8E4;
+  --color-on-background: #0D0D0D;
+  --color-on-surface: #0D0D0D;
+  --color-on-surface-muted: #6B6B66;
+  --color-on-surface-subtle: #8F8F89;
+  --color-border: #DFDDD8;
+  --color-border-strong: #0D0D0D;
+
+  --color-action: #0D0D0D;
+  --color-on-action: #FFFFFF;
+  --color-action-hover: #262626;
+  --color-action-active: #000000;
+  --color-action-disabled: #C9C7C2;
+  --color-on-action-disabled: #8F8F89;
+  --color-focus: #2B22F0;
+
+  --color-expressive-mint: #3ED9C0;
+  --color-expressive-amber: #FFC53D;
+  --color-expressive-violet: #B24BF3;
+  --color-expressive-orange: #F97316;
+  --color-expressive-overlap: #2B22F0;
+
+  --color-success: #15795A;
+  --color-warning: #8A5A00;
+  --color-error: #C42B1C;
+  --color-info: #2B22F0;
+
+  /* Typography */
+  --font-display: 'Barlow', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --type-display-family: var(--font-display);
+  --type-display-size: 64px;  --type-display-weight: 800; --type-display-lh: 0.95; --type-display-ls: -0.02em;
+  --type-h1-family: var(--font-display);
+  --type-h1-size: 44px;       --type-h1-weight: 800;      --type-h1-lh: 1.02;     --type-h1-ls: -0.02em;
+  --type-h2-family: var(--font-display);
+  --type-h2-size: 32px;       --type-h2-weight: 700;      --type-h2-lh: 1.1;      --type-h2-ls: -0.015em;
+  --type-h3-family: var(--font-display);
+  --type-h3-size: 22px;       --type-h3-weight: 700;      --type-h3-lh: 1.2;      --type-h3-ls: -0.01em;
+  --type-body-lg-family: var(--font-body);
+  --type-body-lg-size: 19px;  --type-body-lg-weight: 400; --type-body-lg-lh: 1.65;--type-body-lg-ls: -0.005em;
+  --type-body-family: var(--font-body);
+  --type-body-size: 16px;     --type-body-weight: 400;    --type-body-lh: 1.7;    --type-body-ls: 0em;
+  --type-body-sm-family: var(--font-body);
+  --type-body-sm-size: 14px;  --type-body-sm-weight: 400; --type-body-sm-lh: 1.6; --type-body-sm-ls: 0em;
+  --type-caption-family: var(--font-body);
+  --type-caption-size: 13px;  --type-caption-weight: 400; --type-caption-lh: 1.5; --type-caption-ls: 0.01em;
+  --type-label-family: var(--font-body);
+  --type-label-size: 11px;    --type-label-weight: 600;   --type-label-lh: 1.2;   --type-label-ls: 0.18em;
+  --type-quote-family: var(--font-display);
+  --type-quote-size: 26px;    --type-quote-weight: 600;   --type-quote-lh: 1.35;  --type-quote-ls: -0.01em;
+  --type-code-family: var(--font-mono);
+  --type-code-size: 14px;     --type-code-weight: 400;    --type-code-lh: 1.6;    --type-code-ls: 0em;
+
+  /* Rounded — exactly two values. There is no "slightly rounded". */
+  --rounded-none: 0px;
+  --rounded-full: 9999px;
+
+  /* Spacing */
+  --space-0: 0px;  --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+  --space-4: 16px; --space-5: 24px; --space-6: 32px; --space-7: 48px;
+  --space-8: 64px; --space-9: 96px; --space-10: 128px;
+}
+
+[data-theme="dark"] {
+  --color-background: #0D0D0C;
+  --color-surface: #1A1A18;
+  --color-surface-sunken: #000000;
+  --color-on-background: #F4F3F1;
+  --color-on-surface: #F4F3F1;
+  --color-on-surface-muted: #A3A29C;
+  --color-on-surface-subtle: #6E6D68;
+  --color-border: #2E2E2B;
+  --color-border-strong: #F4F3F1;
+
+  --color-action: #F4F3F1;
+  --color-on-action: #0D0D0C;
+  --color-action-hover: #FFFFFF;
+  --color-action-active: #DAD8D3;
+  --color-action-disabled: #3A3A36;
+  --color-on-action-disabled: #6E6D68;
+  --color-focus: #6B63FF;
+
+  --color-expressive-mint: #4FE8CF;
+  --color-expressive-amber: #FFD166;
+  --color-expressive-violet: #C77BFF;
+  --color-expressive-orange: #FF8A3D;
+  --color-expressive-overlap: #6B63FF;
+
+  --color-success: #3FD69A;
+  --color-warning: #FFC53D;
+  --color-error: #FF6B5A;
+  --color-info: #6B63FF;
+}
+
+/* ============================================================
+   TYPE UTILITIES — every specimen and component styles from tokens
+   ============================================================ */
+.t-display  { font-family: var(--type-display-family); font-size: var(--type-display-size); font-weight: var(--type-display-weight); line-height: var(--type-display-lh); letter-spacing: var(--type-display-ls); }
+.t-h1       { font-family: var(--type-h1-family); font-size: var(--type-h1-size); font-weight: var(--type-h1-weight); line-height: var(--type-h1-lh); letter-spacing: var(--type-h1-ls); }
+.t-h2       { font-family: var(--type-h2-family); font-size: var(--type-h2-size); font-weight: var(--type-h2-weight); line-height: var(--type-h2-lh); letter-spacing: var(--type-h2-ls); }
+.t-h3       { font-family: var(--type-h3-family); font-size: var(--type-h3-size); font-weight: var(--type-h3-weight); line-height: var(--type-h3-lh); letter-spacing: var(--type-h3-ls); }
+.t-body-lg  { font-family: var(--type-body-lg-family); font-size: var(--type-body-lg-size); font-weight: var(--type-body-lg-weight); line-height: var(--type-body-lg-lh); letter-spacing: var(--type-body-lg-ls); }
+.t-body     { font-family: var(--type-body-family); font-size: var(--type-body-size); font-weight: var(--type-body-weight); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
+.t-body-sm  { font-family: var(--type-body-sm-family); font-size: var(--type-body-sm-size); font-weight: var(--type-body-sm-weight); line-height: var(--type-body-sm-lh); letter-spacing: var(--type-body-sm-ls); }
+.t-caption  { font-family: var(--type-caption-family); font-size: var(--type-caption-size); font-weight: var(--type-caption-weight); line-height: var(--type-caption-lh); letter-spacing: var(--type-caption-ls); }
+.t-label    { font-family: var(--type-label-family); font-size: var(--type-label-size); font-weight: var(--type-label-weight); line-height: var(--type-label-lh); letter-spacing: var(--type-label-ls); text-transform: uppercase; }
+.t-quote    { font-family: var(--type-quote-family); font-size: var(--type-quote-size); font-weight: var(--type-quote-weight); line-height: var(--type-quote-lh); letter-spacing: var(--type-quote-ls); }
+.t-code     { font-family: var(--type-code-family); font-size: var(--type-code-size); font-weight: var(--type-code-weight); line-height: var(--type-code-lh); letter-spacing: var(--type-code-ls); }
+
+/* ============================================================
+   PAGE CHROME — deliberately neutral. The tokens are the subject.
+   ============================================================ */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-on-background);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1160px; margin: 0 auto; padding: var(--space-8) var(--space-6) var(--space-10); }
+
+header.masthead { border-bottom: 1px solid var(--color-border-strong); padding-bottom: var(--space-6); margin-bottom: var(--space-9); }
+.masthead-top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-5); flex-wrap: wrap; }
+.masthead h1 { margin: 0 0 var(--space-4); }
+.masthead p { margin: 0; max-width: 60ch; color: var(--color-on-surface-muted); }
+.mirror-note {
+  margin-top: var(--space-5); padding: var(--space-4);
+  background: var(--color-surface-sunken); color: var(--color-on-surface);
+  max-width: 68ch;
+}
+.mirror-note code { font-family: var(--font-mono); font-size: 13px; }
+
+.theme-toggle {
+  background: var(--color-action); color: var(--color-on-action);
+  border: none; border-radius: var(--rounded-none);
+  padding: 0 var(--space-5); height: 40px; cursor: pointer; flex-shrink: 0;
+}
+.theme-toggle:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+section { margin-bottom: var(--space-10); scroll-margin-top: var(--space-5); }
+.sec-head { display: flex; align-items: baseline; gap: var(--space-4); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-3); margin-bottom: var(--space-6); }
+.sec-num { color: var(--color-on-surface-subtle); }
+.sec-head h2 { margin: 0; }
+.sec-intro { color: var(--color-on-surface-muted); max-width: 68ch; margin: 0 0 var(--space-6); }
+.sub { margin: var(--space-7) 0 var(--space-4); color: var(--color-on-surface-muted); }
+
+.grid { display: grid; gap: var(--space-5); }
+.g4 { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+
+/* ---- Color swatches ---- */
+.swatch { border: 1px solid var(--color-border); background: var(--color-surface); }
+.swatch .chip { height: 92px; display: flex; align-items: flex-end; padding: var(--space-3); }
+.swatch .meta { padding: var(--space-3) var(--space-4) var(--space-4); }
+.swatch .name { display: block; margin-bottom: var(--space-2); }
+.swatch .hex { color: var(--color-on-surface-muted); font-family: var(--font-mono); font-size: 12px; }
+.swatch .ratio { display: block; margin-top: var(--space-2); color: var(--color-on-surface-subtle); font-size: 12px; }
+
+/* ---- Overlap / duotone rule demo ---- */
+.overlap-demo { position: relative; height: 200px; background: var(--color-surface); border: 1px solid var(--color-border); overflow: hidden; }
+.overlap-demo .blk { position: absolute; }
+.overlap-demo .a { left: 40px; top: 30px; width: 150px; height: 140px; background: var(--color-expressive-mint); }
+.overlap-demo .b { left: 120px; top: 30px; width: 60px; height: 140px; background: var(--color-expressive-violet); mix-blend-mode: multiply; }
+.overlap-demo .c { position: absolute; right: var(--space-4); bottom: var(--space-4); color: var(--color-on-surface-muted); max-width: 30ch; text-align: right; }
+
+/* ---- Typography specimens ---- */
+.spec { display: grid; grid-template-columns: 190px 1fr; gap: var(--space-5); padding: var(--space-5) 0; border-bottom: 1px solid var(--color-border); align-items: baseline; }
+.spec .info { color: var(--color-on-surface-muted); }
+.spec .info .tok { display: block; color: var(--color-on-surface); margin-bottom: var(--space-2); }
+.spec .info .val { font-family: var(--font-mono); font-size: 12px; display: block; }
+.spec .sample { overflow-x: auto; }
+
+/* ---- Spacing ---- */
+.space-row { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: var(--space-4); margin-bottom: var(--space-3); }
+.space-bar { background: var(--color-action); height: 18px; }
+.space-row .lab { font-family: var(--font-mono); font-size: 12px; color: var(--color-on-surface-muted); }
+
+/* ---- Radius ---- */
+.radius-box { width: 100%; height: 110px; background: var(--color-action); }
+.radius-none { border-radius: var(--rounded-none); }
+.radius-full { border-radius: var(--rounded-full); width: 110px; height: 110px; }
+.radius-bad { background: var(--color-surface); border: 2px dashed var(--color-error); border-radius: 10px; height: 110px; display: flex; align-items: center; justify-content: center; color: var(--color-error); text-align: center; padding: var(--space-3); }
+
+/* ---- Elevation ---- */
+.elev { padding: var(--space-6); min-height: 130px; }
+.elev-0 { background: var(--color-background); border: 1px dashed var(--color-border); }
+.elev-1 { background: var(--color-surface); border: 1px solid var(--color-border); }
+.elev-2 { background: var(--color-surface); border: 1px solid var(--color-border-strong); }
+.elev-sunk { background: var(--color-surface-sunken); }
+.elev h4 { margin: 0 0 var(--space-2); }
+.elev p { margin: 0; color: var(--color-on-surface-muted); }
+
+/* ============================================================
+   COMPONENTS — built from the components: block in design.md
+   ============================================================ */
+.btn {
+  font-family: var(--type-label-family); font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight); letter-spacing: var(--type-label-ls);
+  line-height: var(--type-label-lh); text-transform: uppercase;
+  border-radius: var(--rounded-none); height: 52px; padding: 0 var(--space-5);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; border: 1px solid transparent; transition: none;
+}
+.btn-primary          { background: var(--color-action); color: var(--color-on-action); }
+.btn-primary:hover    { background: var(--color-action-hover); }
+.btn-primary:active   { background: var(--color-action-active); }
+.btn-primary.is-hover { background: var(--color-action-hover); }
+.btn-primary.is-active{ background: var(--color-action-active); }
+.btn-primary[disabled]{ background: var(--color-action-disabled); color: var(--color-on-action-disabled); cursor: not-allowed; }
+.btn-primary.is-focus { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+.btn-ghost            { background: transparent; color: var(--color-action); border-color: var(--color-border-strong); }
+.btn-ghost:hover, .btn-ghost.is-hover { background: var(--color-action); color: var(--color-on-action); }
+
+.btn-micro {
+  background: transparent; color: var(--color-on-surface); border: none;
+  height: 28px; padding: 0 var(--space-2);
+  font-family: var(--type-label-family); font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight); letter-spacing: var(--type-label-ls);
+  text-transform: uppercase; cursor: pointer;
+}
+.btn-micro:hover, .btn-micro.is-hover { color: var(--color-on-surface-muted); }
+.btn:focus-visible, .btn-micro:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+a.ds-link { color: var(--color-on-surface); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a.ds-link:hover, a.ds-link.is-hover { color: var(--color-on-surface-muted); }
+
+.card { background: var(--color-surface); color: var(--color-on-surface); border: 1px solid var(--color-border); border-radius: var(--rounded-none); padding: var(--space-6); }
+.card:hover, .card.is-hover { border-color: var(--color-border-strong); }
+.card h4 { margin: 0 0 var(--space-3); }
+.card p { margin: 0; color: var(--color-on-surface-muted); }
+.divider { height: 1px; width: 100%; background: var(--color-border); border: none; margin: var(--space-6) 0; }
+
+.pull-quote { border-left: 2px solid var(--color-border-strong); padding: var(--space-2) var(--space-6); margin: 0; }
+.callout { background: var(--color-surface-sunken); padding: var(--space-5); }
+.callout p { margin: 0; }
+figure.ds-fig { margin: 0; }
+figure.ds-fig .img { height: 130px; background: var(--color-expressive-amber); }
+figure.ds-fig figcaption { padding: var(--space-3) 0 0; color: var(--color-on-surface-muted); }
+
+.field { margin-bottom: var(--space-5); }
+.field label { display: block; margin-bottom: var(--space-2); color: var(--color-on-surface); }
+.inp {
+  width: 100%; height: 52px; padding: 0 var(--space-4);
+  background: var(--color-surface); color: var(--color-on-surface);
+  border: 1px solid var(--color-border); border-radius: var(--rounded-none);
+  font-family: var(--type-body-family); font-size: var(--type-body-size);
+}
+.inp::placeholder { color: var(--color-on-surface-subtle); }
+.inp:focus, .inp.is-focus { border-color: var(--color-border-strong); outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.inp.is-error { border-color: var(--color-error); }
+.inp[disabled] { background: var(--color-surface-sunken); color: var(--color-on-surface-subtle); cursor: not-allowed; }
+textarea.inp { height: 144px; padding: var(--space-4); resize: vertical; }
+select.inp { appearance: none; }
+.err-msg { margin: var(--space-2) 0 0; color: var(--color-error); }
+
+.cb-row { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+.cb { width: 20px; height: 20px; border: 1px solid var(--color-border-strong); background: var(--color-surface); border-radius: var(--rounded-none); flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+.cb.checked { background: var(--color-action); color: var(--color-on-action); }
+.cb svg { display: block; }
+
+.dots { display: flex; gap: var(--space-2); align-items: center; }
+.dot { width: 7px; height: 7px; border-radius: var(--rounded-full); background: var(--color-action-disabled); }
+.dot.active { background: var(--color-action); }
+
+.badge { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--space-2); background: var(--color-action); color: var(--color-on-action); border-radius: var(--rounded-none); }
+
+.state-note { color: var(--color-on-surface-subtle); margin-top: var(--space-2); display: block; }
+.row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: flex-start; }
+.stack { display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-start; }
+
+/* ---- Do / Don't ---- */
+.dd { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--space-6); }
+.dd-col { border-top: 2px solid var(--color-border-strong); padding-top: var(--space-4); }
+.dd-col h3 { margin: 0 0 var(--space-4); }
+.dd-col ul { list-style: none; margin: 0; padding: 0; }
+.dd-col li { display: grid; grid-template-columns: 22px 1fr; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+.mark-do { color: var(--color-success); }
+.mark-dont { color: var(--color-error); }
+.dd-vis { display: flex; gap: var(--space-3); margin-top: var(--space-5); }
+.dd-vis span { width: 56px; height: 40px; display: block; }
+
+@media (max-width: 640px) {
+  .wrap { padding: var(--space-6) var(--space-5) var(--space-9); }
+  :root { --type-display-size: 40px; --type-h1-size: 32px; --type-h2-size: 24px; }
+  .spec { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ============ 1. HEADER ============ -->
+<header class="masthead">
+  <div class="masthead-top">
+    <div>
+      <p class="t-label" style="color:var(--color-on-surface-muted);margin:0 0 var(--space-4)">Design System</p>
+      <h1 class="t-display">CF Personal</h1>
+    </div>
+    <button class="theme-toggle t-label" id="themeToggle" aria-label="Toggle colour theme">Dark mode</button>
+  </div>
+  <p class="t-body-lg">An editorial, confident, warm personal-brand system where <strong>black acts and color expresses</strong>.</p>
+  <div class="mirror-note t-body-sm">
+    This page is the <strong>human-readable mirror</strong> of <code>docs/design.md</code>, which is the source of truth.
+    Every swatch, specimen and component below renders from the same token values via CSS custom properties — nothing is hardcoded.
+    When a token changes in the <code>.md</code>, change it here in the same edit so the two never drift.
+  </div>
+</header>
+
+<!-- ============ 2. COLORS ============ -->
+<section id="colors">
+  <div class="sec-head"><span class="sec-num t-label">01</span><h2 class="t-h2">Colors</h2></div>
+  <p class="sec-intro t-body">The canvas is warm off-white, not pure white — that warmth is what stops a high-contrast system reading as clinical. Interaction is strictly monochrome; the expressive palette never touches a control.</p>
+
+  <h3 class="sub t-label">Canvas &amp; content</h3>
+  <div class="grid g4">
+    <div class="swatch"><div class="chip" style="background:var(--color-background)"><span class="t-body-sm" style="color:var(--color-on-background)">On background</span></div><div class="meta"><span class="name t-label">background</span><span class="hex">#F4F3F1 / #0D0D0C</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-surface)"><span class="t-body-sm" style="color:var(--color-on-surface)">On surface</span></div><div class="meta"><span class="name t-label">surface</span><span class="hex">#FFFFFF / #1A1A18</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-surface-sunken)"><span class="t-body-sm" style="color:var(--color-on-surface)">Recessed</span></div><div class="meta"><span class="name t-label">surface-sunken</span><span class="hex">#EAE8E4 / #000000</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-on-surface)"><span class="t-body-sm" style="color:var(--color-surface)">Primary text</span></div><div class="meta"><span class="name t-label">on-surface</span><span class="hex">#0D0D0D / #F4F3F1</span><span class="ratio">17.5:1 — AAA</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-on-surface-muted)"><span class="t-body-sm" style="color:var(--color-surface)">Secondary text</span></div><div class="meta"><span class="name t-label">on-surface-muted</span><span class="hex">#6B6B66 / #A3A29C</span><span class="ratio">4.8:1 — AA</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-on-surface-subtle)"><span class="t-body-sm" style="color:var(--color-surface)">Disabled only</span></div><div class="meta"><span class="name t-label">on-surface-subtle</span><span class="hex">#8F8F89 / #6E6D68</span><span class="ratio">3.4:1 — never body copy</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-border)"></div><div class="meta"><span class="name t-label">border</span><span class="hex">#DFDDD8 / #2E2E2B</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-border-strong)"></div><div class="meta"><span class="name t-label">border-strong</span><span class="hex">#0D0D0D / #F4F3F1</span></div></div>
+  </div>
+
+  <h3 class="sub t-label">Action — black acts</h3>
+  <div class="grid g4">
+    <div class="swatch"><div class="chip" style="background:var(--color-action)"><span class="t-body-sm" style="color:var(--color-on-action)">On action</span></div><div class="meta"><span class="name t-label">action</span><span class="hex">#0D0D0D / #F4F3F1</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-action-hover)"><span class="t-body-sm" style="color:var(--color-on-action)">Hover</span></div><div class="meta"><span class="name t-label">action-hover</span><span class="hex">#262626 / #FFFFFF</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-action-active)"><span class="t-body-sm" style="color:var(--color-on-action)">Active</span></div><div class="meta"><span class="name t-label">action-active</span><span class="hex">#000000 / #DAD8D3</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-action-disabled)"><span class="t-body-sm" style="color:var(--color-on-action-disabled)">Disabled</span></div><div class="meta"><span class="name t-label">action-disabled</span><span class="hex">#C9C7C2 / #3A3A36</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-focus)"><span class="t-body-sm" style="color:#FFFFFF">Focus ring</span></div><div class="meta"><span class="name t-label">focus</span><span class="hex">#2B22F0 / #6B63FF</span><span class="ratio">7.3:1 — the one accent exception</span></div></div>
+  </div>
+
+  <h3 class="sub t-label">Expressive — one per composition, never on a control</h3>
+  <div class="grid g4">
+    <div class="swatch"><div class="chip" style="background:var(--color-expressive-mint)"></div><div class="meta"><span class="name t-label">expressive-mint</span><span class="hex">#3ED9C0 / #4FE8CF</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-expressive-amber)"></div><div class="meta"><span class="name t-label">expressive-amber</span><span class="hex">#FFC53D / #FFD166</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-expressive-violet)"></div><div class="meta"><span class="name t-label">expressive-violet</span><span class="hex">#B24BF3 / #C77BFF</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-expressive-orange)"></div><div class="meta"><span class="name t-label">expressive-orange</span><span class="hex">#F97316 / #FF8A3D</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-expressive-overlap)"></div><div class="meta"><span class="name t-label">expressive-overlap</span><span class="hex">#2B22F0 / #6B63FF</span><span class="ratio">shape × photo multiply blend</span></div></div>
+  </div>
+
+  <h3 class="sub t-label">The overlap rule</h3>
+  <div class="overlap-demo">
+    <div class="blk a"></div>
+    <div class="blk b"></div>
+    <div class="c t-body-sm">Where a shape crosses another shape or a photograph, the overlap goes electric blue via <code style="font-family:var(--font-mono);font-size:12px">mix-blend-mode: multiply</code>. This is what makes compositions using different accents read as one family.</div>
+  </div>
+
+  <h3 class="sub t-label">Semantic</h3>
+  <div class="grid g4">
+    <div class="swatch"><div class="chip" style="background:var(--color-success)"><span class="t-body-sm" style="color:#FFFFFF">Success</span></div><div class="meta"><span class="name t-label">success</span><span class="hex">#15795A / #3FD69A</span><span class="ratio">4.8:1 — AA</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-warning)"><span class="t-body-sm" style="color:#FFFFFF">Warning</span></div><div class="meta"><span class="name t-label">warning</span><span class="hex">#8A5A00 / #FFC53D</span><span class="ratio">5.4:1 — AA</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-error)"><span class="t-body-sm" style="color:#FFFFFF">Error</span></div><div class="meta"><span class="name t-label">error</span><span class="hex">#C42B1C / #FF6B5A</span><span class="ratio">5.1:1 — AA</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--color-info)"><span class="t-body-sm" style="color:#FFFFFF">Info</span></div><div class="meta"><span class="name t-label">info</span><span class="hex">#2B22F0 / #6B63FF</span><span class="ratio">7.3:1 — AAA</span></div></div>
+  </div>
+</section>
+
+<!-- ============ 3. TYPOGRAPHY ============ -->
+<section id="typography">
+  <div class="sec-head"><span class="sec-num t-label">02</span><h2 class="t-h2">Typography</h2></div>
+  <p class="sec-intro t-body">Barlow sets display and headings; Inter sets everything else. Barlow is a slightly condensed grotesk with squared terminals — narrower and more technical than Inter, which gives the pairing a real width contrast. Hierarchy still comes mainly from <strong>weight, tracking, case and scale jumps</strong>. Barlow earns its place at 700–800 with <em>moderate</em> negative tracking: it is already narrow, so tracking it as hard as a wide geometric would collide its terminals.</p>
+
+  <div class="spec"><div class="info"><span class="tok t-label">display</span><span class="val">Barlow · 64px · 800<br>lh 0.95 · ls -0.02em</span></div><div class="sample t-display">Editorial</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">h1</span><span class="val">Barlow · 44px · 800<br>lh 1.02 · ls -0.02em</span></div><div class="sample t-h1">Confident and warm</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">h2</span><span class="val">Barlow · 32px · 700<br>lh 1.1 · ls -0.015em</span></div><div class="sample t-h2">Section heading</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">h3</span><span class="val">Barlow · 22px · 700<br>lh 1.2 · ls -0.01em</span></div><div class="sample t-h3">Subsection heading</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">body-lg</span><span class="val">Inter · 19px · 400<br>lh 1.65 · ls -0.005em</span></div><div class="sample t-body-lg">Lead paragraph. Used for the opening line of an article or the standfirst under a headline.</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">body</span><span class="val">Inter · 16px · 400<br>lh 1.7 · ls 0</span></div><div class="sample t-body">Default reading size. The generous 1.7 line-height is deliberate — it holds the editorial feel at long lengths and keeps dense paragraphs from tightening into a wall.</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">body-sm</span><span class="val">Inter · 14px · 400<br>lh 1.6 · ls 0</span></div><div class="sample t-body-sm">Secondary body copy, list items, table cells and supporting detail.</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">caption</span><span class="val">Inter · 13px · 400<br>lh 1.5 · ls 0.01em</span></div><div class="sample t-caption" style="color:var(--color-on-surface-muted)">Figure caption, image credit, timestamp.</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">label</span><span class="val">Inter · 11px · 600<br>lh 1.2 · ls 0.18em · UPPERCASE</span></div><div class="sample t-label">Skip · Done · Let's go</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">quote</span><span class="val">Barlow · 26px · 600<br>lh 1.35 · ls -0.01em</span></div><div class="sample t-quote">Display weight without competing with a heading.</div></div>
+  <div class="spec"><div class="info"><span class="tok t-label">code</span><span class="val">ui-monospace · 14px · 400<br>lh 1.6 · ls 0</span></div><div class="sample t-code">const action = tokens.colors.action;</div></div>
+</section>
+
+<!-- ============ 4. SPACING ============ -->
+<section id="spacing">
+  <div class="sec-head"><span class="sec-num t-label">03</span><h2 class="t-h2">Spacing</h2></div>
+  <p class="sec-intro t-body">An 8px base with a deliberately non-linear top end. The large steps matter more than the small ones — the character of this system lives in its voids. Rhythm is: large void, tight cluster, large void. Uniform gaps are what make a layout read as a template.</p>
+  <div class="space-row"><span class="lab">0 · 0px</span><div><div class="space-bar" style="width:var(--space-0)"></div></div></div>
+  <div class="space-row"><span class="lab">1 · 4px</span><div><div class="space-bar" style="width:var(--space-1)"></div></div></div>
+  <div class="space-row"><span class="lab">2 · 8px</span><div><div class="space-bar" style="width:var(--space-2)"></div></div></div>
+  <div class="space-row"><span class="lab">3 · 12px</span><div><div class="space-bar" style="width:var(--space-3)"></div></div></div>
+  <div class="space-row"><span class="lab">4 · 16px</span><div><div class="space-bar" style="width:var(--space-4)"></div></div></div>
+  <div class="space-row"><span class="lab">5 · 24px</span><div><div class="space-bar" style="width:var(--space-5)"></div></div></div>
+  <div class="space-row"><span class="lab">6 · 32px</span><div><div class="space-bar" style="width:var(--space-6)"></div></div></div>
+  <div class="space-row"><span class="lab">7 · 48px</span><div><div class="space-bar" style="width:var(--space-7)"></div></div></div>
+  <div class="space-row"><span class="lab">8 · 64px</span><div><div class="space-bar" style="width:var(--space-8)"></div></div></div>
+  <div class="space-row"><span class="lab">9 · 96px</span><div><div class="space-bar" style="width:var(--space-9)"></div></div></div>
+  <div class="space-row"><span class="lab">10 · 128px</span><div><div class="space-bar" style="width:var(--space-10)"></div></div></div>
+</section>
+
+<!-- ============ 5. RADIUS ============ -->
+<section id="radius">
+  <div class="sec-head"><span class="sec-num t-label">04</span><h2 class="t-h2">Shapes</h2></div>
+  <p class="sec-intro t-body">There are exactly two radius values. The absence of a middle option is the enforcement mechanism — there is no "slightly rounded" to reach for.</p>
+  <div class="grid g3">
+    <div><div class="radius-box radius-none"></div><p class="t-label" style="margin:var(--space-3) 0 var(--space-1)">rounded-none</p><p class="t-caption" style="margin:0;color:var(--color-on-surface-muted)">0px — buttons, inputs, cards, badges, images. Everything rectangular.</p></div>
+    <div><div class="radius-box radius-full"></div><p class="t-label" style="margin:var(--space-3) 0 var(--space-1)">rounded-full</p><p class="t-caption" style="margin:0;color:var(--color-on-surface-muted)">9999px — reserved for genuinely circular things, principally the pagination dot.</p></div>
+    <div><div class="radius-bad t-body-sm">✗ 10px<br>Not a token. Not a judgment call.</div><p class="t-label" style="margin:var(--space-3) 0 var(--space-1);color:var(--color-error)">Does not exist</p><p class="t-caption" style="margin:0;color:var(--color-on-surface-muted)">Any radius between 0 and full is a bug. Rounding is the default gesture of every UI framework — it is the fastest route to Generic SaaS.</p></div>
+  </div>
+</section>
+
+<!-- ============ 6. ELEVATION ============ -->
+<section id="elevation">
+  <div class="sec-head"><span class="sec-num t-label">05</span><h2 class="t-h2">Elevation &amp; Depth</h2></div>
+  <p class="sec-intro t-body">There is no shadow scale. Depth is surface contrast and 1px borders — nothing else. Hover does not raise a card; it <em>sharpens</em> it.</p>
+  <div class="grid g2">
+    <div class="elev elev-sunk"><h4 class="t-h3">Sunken</h4><p class="t-body-sm">surface-sunken on background. Recessed blocks, callouts, code wells.</p></div>
+    <div class="elev elev-0"><h4 class="t-h3">Base</h4><p class="t-body-sm">The canvas itself. No border in production — the dashed outline here is only to show its extent.</p></div>
+    <div class="elev elev-1"><h4 class="t-h3">Raised</h4><p class="t-body-sm">surface on background plus a 1px border. A ~4% luminance step reads as separation with no blur at all.</p></div>
+    <div class="elev elev-2"><h4 class="t-h3">Raised · emphasis / hover</h4><p class="t-body-sm">Same fill, border swapped to border-strong. The plane stays flat while interactivity is still confirmed.</p></div>
+  </div>
+  <p class="t-caption" style="color:var(--color-on-surface-subtle);margin-top:var(--space-4)">Note: the design.md component schema has no border property, so border values are specified in the Elevation prose of the <code style="font-family:var(--font-mono)">.md</code> and implemented here.</p>
+</section>
+
+<!-- ============ 7. COMPONENTS ============ -->
+<section id="components">
+  <div class="sec-head"><span class="sec-num t-label">06</span><h2 class="t-h2">Components</h2></div>
+  <p class="sec-intro t-body">Every entry from the <code style="font-family:var(--font-mono);font-size:14px">components:</code> block, rendered live. States that can't be triggered statically are shown as labelled copies already in that state.</p>
+
+  <h3 class="sub t-label">Buttons — primary</h3>
+  <div class="row">
+    <div class="stack"><button class="btn btn-primary">Let's go</button><span class="state-note t-caption">default (hover me)</span></div>
+    <div class="stack"><button class="btn btn-primary is-hover">Let's go</button><span class="state-note t-caption">hover</span></div>
+    <div class="stack"><button class="btn btn-primary is-active">Let's go</button><span class="state-note t-caption">active</span></div>
+    <div class="stack"><button class="btn btn-primary is-focus">Let's go</button><span class="state-note t-caption">focus</span></div>
+    <div class="stack"><button class="btn btn-primary" disabled>Let's go</button><span class="state-note t-caption">disabled</span></div>
+  </div>
+
+  <h3 class="sub t-label">Buttons — ghost &amp; micro</h3>
+  <div class="row">
+    <div class="stack"><button class="btn btn-ghost">Read more</button><span class="state-note t-caption">ghost · default</span></div>
+    <div class="stack"><button class="btn btn-ghost is-hover">Read more</button><span class="state-note t-caption">ghost · hover (inverts, never tints)</span></div>
+    <div class="stack"><button class="btn-micro">Skip</button><span class="state-note t-caption">micro · default</span></div>
+    <div class="stack"><button class="btn-micro is-hover">Skip</button><span class="state-note t-caption">micro · hover</span></div>
+  </div>
+
+  <h3 class="sub t-label">Link</h3>
+  <p class="t-body" style="max-width:60ch">Body copy containing <a href="#components" class="ds-link">a default link</a> and <a href="#components" class="ds-link is-hover">a link in its hover state</a>. Links stay monochrome — colour is never the affordance.</p>
+
+  <h3 class="sub t-label">Cards &amp; divider</h3>
+  <div class="grid g3">
+    <div class="card"><h4 class="t-h3">Card</h4><p class="t-body-sm">surface on background, 1px border, 32px padding. Expressive colour may appear inside a card as imagery — never as its fill or border.</p></div>
+    <div class="card is-hover"><h4 class="t-h3">Card · hover</h4><p class="t-body-sm">Border swaps to border-strong. No lift, no shadow, no scale.</p></div>
+    <div class="card"><h4 class="t-h3">With badge</h4><p class="t-body-sm" style="margin-bottom:var(--space-4)">Badges are sharp, black, label type.</p><span class="badge t-label">New</span></div>
+  </div>
+  <hr class="divider">
+  <p class="t-caption" style="color:var(--color-on-surface-muted);margin:0">↑ divider — 1px, border colour, full width</p>
+
+  <h3 class="sub t-label">Editorial</h3>
+  <div class="grid g2">
+    <div>
+      <blockquote class="pull-quote t-quote">Black acts. Color expresses. Everything else is a bug.</blockquote>
+      <p class="t-caption" style="color:var(--color-on-surface-subtle);margin-top:var(--space-3)">pull-quote — quote type, 2px left rule, no fill</p>
+    </div>
+    <div>
+      <div class="callout"><p class="t-body">A callout sits on surface-sunken with no border. Use it for asides, prerequisites and warnings inside long-form writing.</p></div>
+      <p class="t-caption" style="color:var(--color-on-surface-subtle);margin-top:var(--space-3)">callout</p>
+    </div>
+    <div>
+      <figure class="ds-fig"><div class="img"></div><figcaption class="t-caption">figure-caption — caption type in on-surface-muted. One expressive colour per composition.</figcaption></figure>
+    </div>
+  </div>
+
+  <h3 class="sub t-label">Forms</h3>
+  <div class="grid g2">
+    <div>
+      <div class="field"><label class="t-label" for="f1">Email</label><input class="inp" id="f1" type="email" placeholder="you@example.com"></div>
+      <div class="field"><label class="t-label" for="f2">Email · focus</label><input class="inp is-focus" id="f2" type="email" value="celso@example.com"></div>
+      <div class="field"><label class="t-label" for="f3">Email · error</label><input class="inp is-error" id="f3" type="email" value="not-an-email"><p class="err-msg t-body-sm">Enter a valid email address.</p></div>
+      <div class="field"><label class="t-label" for="f4">Email · disabled</label><input class="inp" id="f4" type="email" value="locked@example.com" disabled></div>
+    </div>
+    <div>
+      <div class="field"><label class="t-label" for="f5">Select</label><select class="inp" id="f5"><option>Choose an option</option><option>Editorial</option><option>Confident</option><option>Warm</option></select></div>
+      <div class="field"><label class="t-label" for="f6">Textarea</label><textarea class="inp" id="f6" placeholder="Write something…"></textarea></div>
+      <div class="field">
+        <span class="t-label" style="display:block;margin-bottom:var(--space-3)">Checkbox</span>
+        <div class="cb-row"><span class="cb"></span><span class="t-body-sm">Unchecked</span></div>
+        <div class="cb-row"><span class="cb checked"><svg width="12" height="9" viewBox="0 0 12 9" fill="none" aria-hidden="true"><path d="M1 4.5L4.2 7.7L11 1" stroke="currentColor" stroke-width="2"/></svg></span><span class="t-body-sm">Checked</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub t-label">Pagination dots</h3>
+  <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+  <p class="t-caption" style="color:var(--color-on-surface-subtle);margin-top:var(--space-3)">The only component permitted to use rounded-full.</p>
+</section>
+
+<!-- ============ 8. DO'S AND DON'TS ============ -->
+<section id="dos">
+  <div class="sec-head"><span class="sec-num t-label">07</span><h2 class="t-h2">Do's and Don'ts</h2></div>
+  <div class="dd">
+    <div class="dd-col">
+      <h3 class="t-h3">✓ Do</h3>
+      <ul class="t-body-sm">
+        <li><span class="mark-do">✓</span><span>Use <strong>action</strong> — black in light, off-white in dark — for every button, link and control.</span></li>
+        <li><span class="mark-do">✓</span><span>Pick exactly <strong>one expressive colour per composition</strong>, and let it appear as large geometry, not small decoration.</span></li>
+        <li><span class="mark-do">✓</span><span>Use <strong>expressive-overlap</strong> blue wherever a shape crosses a photograph, as a multiply blend.</span></li>
+        <li><span class="mark-do">✓</span><span>Set Barlow at <strong>700–800 with moderate negative tracking</strong> (-0.01em to -0.02em), and keep it above 22px.</span></li>
+        <li><span class="mark-do">✓</span><span>Render <strong>label</strong> type in uppercase everywhere it appears.</span></li>
+        <li><span class="mark-do">✓</span><span>Vary spacing deliberately — tight clusters separated by large voids.</span></li>
+      </ul>
+      <div class="dd-vis">
+        <span style="background:var(--color-action)"></span>
+        <span style="background:var(--color-expressive-mint)"></span>
+        <span style="background:var(--color-surface);border:1px solid var(--color-border)"></span>
+      </div>
+      <p class="t-caption" style="color:var(--color-on-surface-subtle);margin-top:var(--space-2)">Black acts · one accent · flat surfaces</p>
+    </div>
+    <div class="dd-col">
+      <h3 class="t-h3">✗ Don't</h3>
+      <ul class="t-body-sm">
+        <li><span class="mark-dont">✗</span><span>Don't apply any corner radius other than <strong>none</strong> or <strong>full</strong>. A 4px radius is a bug.</span></li>
+        <li><span class="mark-dont">✗</span><span>Don't put an expressive colour on a button, link, chip or any interactive surface.</span></li>
+        <li><span class="mark-dont">✗</span><span>Don't add shadows, gradients, glows, blurs, glassmorphism or illustrated blobs.</span></li>
+        <li><span class="mark-dont">✗</span><span>Don't run two or more expressive colours in the same view.</span></li>
+        <li><span class="mark-dont">✗</span><span>Don't use Barlow for body copy, captions or anything under 22px, below 600 weight, or tracked tighter than -0.02em.</span></li>
+        <li><span class="mark-dont">✗</span><span>Don't use <strong>on-surface-subtle</strong> for body copy. It fails WCAG AA and exists for disabled states only.</span></li>
+      </ul>
+      <div class="dd-vis">
+        <span style="background:linear-gradient(135deg,#6366F1,#A855F7);border-radius:10px"></span>
+        <span style="background:var(--color-expressive-amber);border-radius:10px"></span>
+        <span style="background:var(--color-surface);border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.25)"></span>
+      </div>
+      <p class="t-caption" style="color:var(--color-on-surface-subtle);margin-top:var(--space-2)">Gradient · accent-on-control · rounded + shadow — all forbidden</p>
+    </div>
+  </div>
+</section>
+
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    root.setAttribute('data-theme', 'dark');
+  }
+  function sync() {
+    btn.textContent = root.getAttribute('data-theme') === 'dark' ? 'Light mode' : 'Dark mode';
+  }
+  btn.addEventListener('click', function () {
+    root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    sync();
+  });
+  sync();
+})();
+</script>
+</body>
+</html>
